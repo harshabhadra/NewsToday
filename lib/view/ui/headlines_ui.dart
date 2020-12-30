@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 
 import 'package:newsapp/model/top_headlines.dart';
@@ -67,78 +68,79 @@ class _HeadlinesScreenState extends State<HeadlinesScreen> {
   }
 
   Widget _buildBody(Articles articles) {
+    DateTime dateTime = DateTime.parse(articles.publishedAt);
+    DateFormat formatter = DateFormat.yMMMd('en_US');
+    String date = formatter.format(dateTime);
+
     return Container(
       color: getColor(),
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(16)),
-            child: Container(
-              color: Colors.white,
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(32),
-                          bottomRight: Radius.circular(32)),
-                      child: articles.urlToImage != null
-                          ? Image(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(articles.urlToImage),
-                            )
-                          : FlutterLogo(),
-                    ),
-                  ),
-                  Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                color: Colors.white,
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Expanded(
                       flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              articles.title != null ? articles.title : '',
-                              style: GoogleFonts.openSans(
-                                  textStyle:
-                                      Theme.of(context).textTheme.headline6,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(32),
+                            bottomRight: Radius.circular(32)),
+                        child: articles.urlToImage != null
+                            ? Image(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(articles.urlToImage),
+                              )
+                            : FlutterLogo(),
+                      ),
+                    ),
+                    Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                          child: Column(
+                            children: [
+                              Text(
+                                articles.title != null ? articles.title : '',
+                                style: GoogleFonts.openSans(
+                                    textStyle:
+                                        Theme.of(context).textTheme.headline6,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: Row(
+                                  children: [
+                                    Text(
                                       articles.source.name != null
                                           ? articles.source.name
                                           : '',
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 16),
+                                      style: TextStyle(color: Colors.grey),
                                     ),
-                                  ),
-                                  Spacer(),
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text(
-                                      articles.publishedAt != null
-                                          ? articles.publishedAt
-                                          : '',
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 16),
+                                    Spacer(
+                                      flex: 1,
                                     ),
-                                  ),
-                                ],
+                                    Flexible(
+                                      flex: 2,
+                                      child: Text(
+                                        articles.publishedAt != null
+                                            ? date
+                                            : '',
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 16),
+                              Expanded(
                                 child: Text(
                                   articles.content != null
                                       ? articles.content
@@ -149,12 +151,12 @@ class _HeadlinesScreenState extends State<HeadlinesScreen> {
                                       fontWeight: FontWeight.w500,
                                       fontSize: 18)),
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ))
-                ],
+                              )
+                            ],
+                          ),
+                        ))
+                  ],
+                ),
               ),
             ),
           ),

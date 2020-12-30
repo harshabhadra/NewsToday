@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 import 'package:newsapp/model/top_headlines.dart';
 
@@ -24,6 +25,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Box box;
   int position;
   List<Articles> fList = new List();
+  String date;
+
   @override
   void initState() {
     articles = widget.articles;
@@ -52,6 +55,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
       isSaved = false;
       position = -1;
     }
+
+    DateTime dateTime = DateTime.parse(articles.publishedAt);
+    DateFormat formatter = DateFormat.yMMMd('en_US');
+    date = formatter.format(dateTime);
+
     super.initState();
   }
 
@@ -110,6 +118,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
             ),
             Container(
                 margin: EdgeInsets.all(16),
+                width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,28 +130,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
                             articles.source.name != null
                                 ? articles.source.name
                                 : '',
-                            style: TextStyle(color: Colors.grey, fontSize: 16),
+                            style: TextStyle(color: Colors.grey),
                           ),
-                        ),
-                        Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Text(
-                            articles.publishedAt != null
-                                ? articles.publishedAt
-                                : '',
-                            style: TextStyle(color: Colors.grey, fontSize: 16),
+                          Spacer(
+                            flex: 1,
                           ),
-                        ),
-                      ],
+                          Flexible(
+                            flex: 2,
+                            child: Text(
+                              articles.publishedAt != null ? date : '',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Expanded(
                       child: Padding(

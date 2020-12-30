@@ -40,26 +40,26 @@ class _HomeScreenState extends State<HomeScreen> {
     today = new DateFormat.yMMMMd('en_US').format(now);
 
     bloc.getTopHeadlines();
-    _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        if (!_isScrollingDown) {
-          setState(() {
-            _isScrollingDown = true;
-            _showAppBar = false;
-          });
-        }
-      } else if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        if (_isScrollingDown) {
-          setState(() {
-            _isScrollingDown = false;
-            _showAppBar = true;
-          });
-        }
-      }
-    });
+    // _scrollController = ScrollController();
+    // _scrollController.addListener(() {
+    //   if (_scrollController.position.userScrollDirection ==
+    //       ScrollDirection.reverse) {
+    //     if (!_isScrollingDown) {
+    //       setState(() {
+    //         _isScrollingDown = true;
+    //         _showAppBar = false;
+    //       });
+    //     }
+    //   } else if (_scrollController.position.userScrollDirection ==
+    //       ScrollDirection.forward) {
+    //     if (_isScrollingDown) {
+    //       setState(() {
+    //         _isScrollingDown = false;
+    //         _showAppBar = true;
+    //       });
+    //     }
+    //   }
+    // });
     super.initState();
   }
 
@@ -87,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: BlocProvider(
           bloc: bloc,
           child: SingleChildScrollView(
-            controller: _scrollController,
             physics: ClampingScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -134,13 +133,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                       child: Row(
                         children: [
                           Text('Top Headlines',
                               style: GoogleFonts.openSans(
                                   textStyle:
-                                      Theme.of(context).textTheme.headline5,
+                                      Theme.of(context).textTheme.headline6,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black)),
                           Spacer(),

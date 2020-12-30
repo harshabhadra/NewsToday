@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
           textTheme:
               GoogleFonts.openSansTextTheme(Theme.of(context).textTheme)),
       home: MainScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

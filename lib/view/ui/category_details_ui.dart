@@ -114,12 +114,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             children: [
                               Hero(
                                 tag: 'image$index',
-                                child: Image(
-                                  fit: BoxFit.cover,
-                                  image: article.urlToImage != null
-                                      ? NetworkImage(article.urlToImage)
-                                      : FlutterLogo(),
-                                ),
+                                child: article.urlToImage != null
+                                    ? Image(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(article.urlToImage))
+                                    : FlutterLogo(),
                               ),
                               Container(
                                 margin: EdgeInsets.all(10),
