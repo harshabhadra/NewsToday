@@ -1,6 +1,12 @@
 # News App
 
-A demo news app 
+A demo news app. Demonstrate use of Dio (Retrofit) library for networking. Hive(noSql) for local database and implement cache data. Following BLOC Pattern.
+Ui demonstrate use of Tab Bar in Flutter.
+Animation libraries used:
+https://pub.dev/packages/liquid_swipe
+https://pub.dev/packages/flutter_staggered_animations
+
+https://user-images.githubusercontent.com/41925285/103333465-e10cfb80-4a22-11eb-907b-64ebef7e1880.mp4
 
 ## Getting Started
 
